@@ -2,7 +2,7 @@
 Using it you can find files on your pc
 
 
-To use it add folder "run file" in path 
+Add folder "run file" in path to use program
 open cmd and write command "whereis"
 
 next you can add flags -f -t 
