@@ -14,6 +14,7 @@ out_time = False
 anal = []
 times = {}
 stat = False
+checked_disks = [[], []]
 
 for k in sys.argv[1:]:
 
@@ -72,7 +73,9 @@ if masks:
         except PermissionError: os.chdir("..")
 
     for disk in drs:
-        walk(disk)
+        checked_disks[0].append(disk)
+        try: walk(disk)
+        except: checked_disks[1].append(disk)
 
     # os.system("cls")
     print("\n\n")
@@ -84,14 +87,18 @@ if masks:
             print("\n" + colored('>>>', "red") + "\t" + colored(inp[i], 'cyan'))
             for out in res:
                 if re.match(mask, out[1]):
-                    print(out[0] + colored(out[1], 'green'))
+                    print( (out[0] + colored(out[1], 'green'))\
+                        .replace("\\", "/").replace("//", "/") )
 
     else: print("Files {} not found".format(masks))
+    print("\n" + ">" * 30 + "\n")
 
     if stat:
+        print(checked_disks)
+        print("\n")
         anal.sort()
         print("\n".join([ str(anal[k][0]) + "s ::: "\
-            + str(anal[k][1]) for k in range(len(anal))]))
+            + str(anal[k][1]) for k in range(-20, 0)]))
 
     if out_time: print("\nWorking time: \t" +\
         colored(str(time.perf_counter()*10//1/10), "yellow") + "s")
